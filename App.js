@@ -1,64 +1,83 @@
-import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import React, { Component } from 'react';
+import {
+  StyleSheet,
+  View,
+  Text,
+  TextInput,
+} from 'react-native';
 
-const App = () => (
-  <View style={styles.container}>
-    <View style={styles.row}>
-      <View style={styles.avatar}>
-        <View style={styles.avatarContent} />
+class App extends Component {
+  state = {
+    firstName: '',
+    lastName: '',
+    ageField: '',
+    focusedField: '',
+    lastBluredField: '',
+    lastSubmitedValue: '',
+    lastEditedValue: '',
+  };
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <View style={{
+          width: 50,
+          height: 50,
+          borderRadius: 25,
+          backgroundColor: this.state.blured ? '#00F' : '#F00',
+        }}>{}</View>
+        <Text>Prenume: {this.state.firstName}</Text>
+        <Text>Nume: {this.state.lastName}</Text>
+        <Text>Varsta: {this.state.ageField}</Text>
+        <Text>Focused field: {this.state.focusedField}</Text>
+        <Text>Last blured field: {this.state.lastBluredField}</Text>
+        <Text>Last submited value: {this.state.lastSubmitedValue}</Text>
+        <Text>Last edited value: {this.state.lastEditedValue}</Text>
+        <TextInput
+          style={styles.textInput}
+          onChangeText={firstName => this.setState({firstName})}
+          onFocus={() => this.setState({focusedField: 'Prenume'})}
+          onBlur={() => this.setState({lastBluredField: 'Prenume'})}
+          onEndEditing={event => this.setState({lastEditedValue: event.nativeEvent.text})}
+          onSubmitEditing={event => this.setState({lastSubmitedValue: event.nativeEvent.text})}
+          value={this.state.firstName}
+          placeholder="Prenume"
+        />
+        <TextInput
+          style={styles.textInput}
+          onChangeText={lastName => this.setState({lastName})}
+          onFocus={() => this.setState({focusedField: 'Nume'})}
+          onBlur={() => this.setState({lastBluredField: 'Nume'})}
+          onEndEditing={event => this.setState({lastEditedValue: event.nativeEvent.text})}
+          onSubmitEditing={event => this.setState({lastSubmitedValue: event.nativeEvent.text})}
+          value={this.state.lastName}
+          placeholder="Nume"
+        />
+        <TextInput
+          style={styles.textInput}
+          onChangeText={age => this.setState({ageField: age})}
+          onFocus={() => this.setState({focusedField: 'Varsta'})}
+          onBlur={() => this.setState({lastBluredField: 'Varsta'})}
+          onEndEditing={event => this.setState({lastEditedValue: event.nativeEvent.text})}
+          onSubmitEditing={event => this.setState({lastSubmitedValue: event.nativeEvent.text})}
+          value={this.state.ageField}
+          placeholder="Varsta"
+        />
       </View>
-      <View style={styles.content}/>
-      <View style={styles.meta}>
-        <View style={styles.metaContent} />
-      </View>
-    </View>
-  </View>
-);
+    );
+  }
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    justifyContent: 'center',
-  },
-  row: {
-    width: '100%',
-    height: 72,
-    flexDirection: 'row',
-    paddingLeft: 16,
-    paddingRight: 16,
-    paddingTop: 8,
-    paddingBottom: 8,
-  },
-  avatar: {
-    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    borderColor: '#F00',
-    borderWidth: 2,
   },
-  avatarContent: {
-    width: 20,
-    height: 20,
-    borderColor: '#00F',
-    borderWidth: 1,
-  },
-  content: {
-    flex: 3,
-    borderColor: '#0F0',
-    borderWidth: 2,
-  },
-  meta: {
-    flex: 1,
-    justifyContent: 'center',
-    borderColor: '#00F',
-    borderWidth: 2,
-  },
-  metaContent: {
-    width: '100%',
-    height: 20,
-    borderColor: '#F00',
-    borderWidth: 1,
+  textInput: {
+    width: '50%',
+    height: 50,
   },
 });
 
