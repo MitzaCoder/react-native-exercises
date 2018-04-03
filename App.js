@@ -1,64 +1,96 @@
-import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import React, { Component } from 'react';
+import {
+  StyleSheet,
+  View,
+  Text,
+} from 'react-native';
+import { MapView } from 'expo';
 
-const App = () => (
-  <View style={styles.container}>
-    <View style={styles.row}>
-      <View style={styles.avatar}>
-        <View style={styles.avatarContent} />
+class App extends Component {
+  state = {
+    mapReady: false,
+    region: {
+      latitude: 44.415036,
+      longitude: 26.169657,
+      latitudeDelta: 0.1,
+      longitudeDelta: 0.1,
+    },
+    pressedCoord: {},
+    pressedPos: {},
+    longPressedCoord: {},
+    longPressedPos: {},
+  };
+
+  render() {
+    const {
+      mapReady,
+      pressedCoord,
+      pressedPos,
+      longPressedCoord,
+      longPressedPos,
+      region,
+    } = this.state;
+    return (
+      <View style={styles.container}>
+        <MapView
+          style={styles.mapView}
+          onMapReady={() => this.setState({mapReady: true})}
+          region={this.state.region}
+          onPress={this.handleMapPress}
+          onLongPress={this.handleMapLongPress}
+          onRegionChangeComplete={region => this.setState({region})}
+          provider="google"
+        />
+        <Text>{mapReady ? 'Map is ready!' : 'Map is NOT ready!'}</Text>
+        <Text>Press coord:</Text>
+        <Text>{pressedCoord.latitude}, {pressedCoord.longitude}</Text>
+        <Text>Press point: {pressedPos.x}, {pressedPos.y}</Text>
+        <Text>Long Press coord:</Text>
+        <Text>{longPressedCoord.latitude}, {longPressedCoord.longitude}</Text>
+        <Text>Long Press point: {`${longPressedPos.x}, ${longPressedPos.y}`}</Text>
+        <Text>Current region:</Text>
+        <Text>{region.latitude}, {region.longitude}</Text>
+        <Text>{region.latitudeDelta}, {region.longitudeDelta}</Text>
       </View>
-      <View style={styles.content}/>
-      <View style={styles.meta}>
-        <View style={styles.metaContent} />
-      </View>
-    </View>
-  </View>
-);
+    );
+  }
+
+  handleMapPress = event => {
+    const {
+      nativeEvent: {
+        coordinate,
+        position,
+      },
+    } = event;
+    this.setState({
+      pressedCoord: coordinate,
+      pressedPos: position
+    });
+  }
+
+  handleMapLongPress = event => {
+    const {
+      nativeEvent: {
+        coordinate,
+        position,
+      },
+    } = event;
+    this.setState({
+      longPressedCoord: coordinate,
+      longPressedPos: position
+    });
+  }
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-  },
-  row: {
-    width: '100%',
-    height: 72,
-    flexDirection: 'row',
-    paddingLeft: 16,
-    paddingRight: 16,
-    paddingTop: 8,
-    paddingBottom: 8,
-  },
-  avatar: {
-    flex: 1,
+    backgroundColor: '#FFF',
     alignItems: 'center',
-    justifyContent: 'center',
-    borderColor: '#F00',
-    borderWidth: 2,
   },
-  avatarContent: {
-    width: 20,
-    height: 20,
-    borderColor: '#00F',
-    borderWidth: 1,
-  },
-  content: {
-    flex: 3,
-    borderColor: '#0F0',
-    borderWidth: 2,
-  },
-  meta: {
-    flex: 1,
-    justifyContent: 'center',
-    borderColor: '#00F',
-    borderWidth: 2,
-  },
-  metaContent: {
+  mapView: {
     width: '100%',
-    height: 20,
-    borderColor: '#F00',
-    borderWidth: 1,
+    height: '50%',
   },
 });
 
