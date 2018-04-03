@@ -1,5 +1,8 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import {
+  StyleSheet,
+  View,
+} from 'react-native';
 
 const App = () => (
   <View style={styles.container}>
@@ -7,7 +10,7 @@ const App = () => (
       <View style={styles.avatar}>
         <View style={styles.avatarContent} />
       </View>
-      <View style={styles.content}/>
+      <View style={styles.content} />
       <View style={styles.meta}>
         <View style={styles.metaContent} />
       </View>
@@ -18,8 +21,8 @@ const App = () => (
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     justifyContent: 'center',
+    backgroundColor: '#fff',
   },
   row: {
     width: '100%',
@@ -40,25 +43,25 @@ const styles = StyleSheet.create({
   avatarContent: {
     width: 20,
     height: 20,
-    borderColor: '#00F',
     borderWidth: 1,
+    borderColor: '#00F',
   },
   content: {
     flex: 3,
-    borderColor: '#0F0',
     borderWidth: 2,
+    borderColor: '#0F0',
   },
   meta: {
     flex: 1,
     justifyContent: 'center',
-    borderColor: '#00F',
     borderWidth: 2,
+    borderColor: '#00F',
   },
   metaContent: {
     width: '100%',
     height: 20,
-    borderColor: '#F00',
     borderWidth: 1,
+    borderColor: '#F00',
   },
 });
 
