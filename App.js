@@ -4,7 +4,6 @@ import {
   View,
   Text,
 } from 'react-native';
-import { MapView } from 'expo';
 
 class App extends Component {
   state = {
@@ -32,15 +31,6 @@ class App extends Component {
     } = this.state;
     return (
       <View style={styles.container}>
-        <MapView
-          style={styles.mapView}
-          onMapReady={() => this.setState({mapReady: true})}
-          region={this.state.region}
-          onPress={this.handleMapPress}
-          onLongPress={this.handleMapLongPress}
-          onRegionChangeComplete={region => this.setState({region})}
-          provider="google"
-        />
         <Text>{mapReady ? 'Map is ready!' : 'Map is NOT ready!'}</Text>
         <Text>Press coord:</Text>
         <Text>{pressedCoord.latitude}, {pressedCoord.longitude}</Text>
@@ -53,32 +43,6 @@ class App extends Component {
         <Text>{region.latitudeDelta}, {region.longitudeDelta}</Text>
       </View>
     );
-  }
-
-  handleMapPress = event => {
-    const {
-      nativeEvent: {
-        coordinate,
-        position,
-      },
-    } = event;
-    this.setState({
-      pressedCoord: coordinate,
-      pressedPos: position
-    });
-  }
-
-  handleMapLongPress = event => {
-    const {
-      nativeEvent: {
-        coordinate,
-        position,
-      },
-    } = event;
-    this.setState({
-      longPressedCoord: coordinate,
-      longPressedPos: position
-    });
   }
 }
 
